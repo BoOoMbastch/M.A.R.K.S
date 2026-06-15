@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNAUTHORIZED ACCESS — M.A.R.K.S</title>
+  <link rel="icon" href="badge.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ═══ WARNING SCREEN ═══ -->
+  <div id="warning-screen">
+    <div class="noise-overlay"></div>
+    <div class="warning-wrap">
+      <div class="warn-top-bar">
+        <span class="blink">▌</span>&nbsp;M.A.R.K.S INTERNAL NETWORK&nbsp;<span class="blink">▌</span>
+      </div>
+      <div class="warn-body">
+        <div id="warn-lines"></div>
+        <div id="bypass-wrap" class="hidden">
+          <p class="warn-legal">
+            Continuing constitutes acceptance of all liability under<br>
+            Directive <span class="redacted-inline">██-████</span> of the
+            <span class="redacted-inline">███████████████████</span> Act.
+          </p>
+          <button id="bypass-btn">[ BYPASS SECURITY PROTOCOL ]</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ MAIN SITE ═══ -->
+  <div id="main-content" class="hidden">
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+
+    <header>
+      <div class="logo-block">
+        <img src="badge.svg" alt="M.A.R.K.S Badge" class="org-badge">
+        <div>
+          <div class="logo glitch" data-text="M.A.R.K.S">M.A.R.K.S</div>
+          <div class="logo-sub">CONTAINMENT &amp; TRIAL DIVISION</div>
+        </div>
+      </div>
+      <div class="header-meta">
+        <div class="meta-row">NETWORK STATUS <span class="tag-red">ACTIVE</span></div>
+        <div class="meta-row">CLEARANCE <span class="redacted-inline">████████</span></div>
+        <div class="meta-row">SESSION <span class="tag-dim" id="session-id">--</span></div>
+      </div>
+    </header>
+
+    <div class="divider"></div>
+
+    <main>
+      <!-- File Header -->
+      <div class="file-bar">
+        <span class="file-no">OPERATION FILE #M-0047</span>
+        <span class="status-dot blink">●</span>
+        <span class="file-status">OPERATION ACTIVE</span>
+      </div>
+
+      <!-- Classified Doc -->
+      <section class="doc-section">
+        <div class="doc-corner tl"></div>
+        <div class="doc-corner tr"></div>
+        <div class="doc-corner bl"></div>
+        <div class="doc-corner br"></div>
+        <div class="doc-stamp">CLASSIFIED</div>
+
+        <p class="doc-p">
+          The M.A.R.K.S program operates under directive
+          <span class="redacted-inline">██-████</span> issued by the
+          <span class="redacted-inline">███████████</span>.
+          Subjects are drawn from undisclosed high-security facilities —
+          the most dangerous individuals on record, selected for
+          <span class="redacted-inline">████████████████████</span>.
+        </p>
+        <p class="doc-p">
+          Each subject participates in structured elimination trials
+          engineered to generate performance data, revenue intelligence,
+          and psychological profiles for <span class="redacted-inline">████████████████████████</span>.
+          Trials consist of six rounds. Subjects who survive all six
+          are considered for <span class="redacted-inline">████</span> clearance and conditional release.
+        </p>
+        <p class="doc-p">
+          M.A.R.K.S workers are embedded observers, researchers, and administrators
+          tasked with ensuring trial integrity and
+          <span class="redacted-inline">████████████████████████████████████</span>.
+        </p>
+
+        <div class="data-strip">
+          <div class="data-cell">
+            <span class="data-label">Subjects Processed</span>
+            <span class="data-val redacted-inline">██,███</span>
+          </div>
+          <div class="data-cell">
+            <span class="data-label">Survival Rate</span>
+            <span class="data-val redacted-inline">█.█%</span>
+          </div>
+          <div class="data-cell">
+            <span class="data-label">Active Facilities</span>
+            <span class="data-val redacted-inline">██</span>
+          </div>
+          <div class="data-cell">
+            <span class="data-label">Operation Status</span>
+            <span class="data-val tag-red">ONGOING</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Access Terminals -->
+      <div class="terminal-grid">
+        <a href="https://discord.gg/2pVFDPdC3C" target="_blank" rel="noopener" class="terminal-card card-grey">
+          <div class="card-tag">// PERSONNEL CHANNEL</div>
+          <div class="card-title">COMM&nbsp;LINK</div>
+          <div class="card-desc">
+            Coordinate with M.A.R.K.S personnel.<br>
+            Access restricted briefings and updates.
+          </div>
+          <div class="card-action">[ OPEN CHANNEL →&nbsp;DISCORD ]</div>
+        </a>
+
+        <a href="https://www.roblox.com/games/139505215950191/M-A-R-K-S" target="_blank" rel="noopener" class="terminal-card card-red">
+          <div class="card-tag">// ACTIVE TRIAL NETWORK</div>
+          <div class="card-title">ENTER&nbsp;TRIALS</div>
+          <div class="card-desc">
+            Join the current trial cycle as prisoner or worker.<br>
+            Only one may earn freedom.
+          </div>
+          <div class="card-action">[ ACCESS TRIAL NETWORK →&nbsp;ROBLOX ]</div>
+        </a>
+      </div>
+
+      <!-- Worker Ranks Teaser -->
+      <section class="ranks-section">
+        <div class="ranks-label">PERSONNEL CLASSIFICATIONS — M.A.R.K.S WORKERS</div>
+        <div class="ranks-grid">
+          <div class="rank-item"><span class="rank-tag">01</span> Normal Worker</div>
+          <div class="rank-item"><span class="rank-tag">02</span> Researcher</div>
+          <div class="rank-item"><span class="rank-tag">03</span> Secretary</div>
+          <div class="rank-item"><span class="rank-tag">04</span> Leader</div>
+          <div class="rank-item rank-boss"><span class="rank-tag tag-red">05</span> Boss</div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-left">
+        This network is continuously monitored. All access events are logged and cross-referenced.
+      </div>
+      <div class="footer-right">
+        M.A.R.K.S —&nbsp;<span class="redacted-inline">████████████████████████████████</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
