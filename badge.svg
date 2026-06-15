@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#161616"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </radialGradient>
+    <!-- Top arc for M.A.R.K.S text -->
+    <path id="tA" d="M 36,200 A 164,164 0 0,1 364,200"/>
+    <!-- Bottom arc for division text -->
+    <path id="bA" d="M 44,200 A 156,156 0 0,0 356,200"/>
+  </defs>
+
+  <!-- ── BASE CIRCLE ───────────────────────────── -->
+  <circle cx="200" cy="200" r="198" fill="url(#bg)"/>
+
+  <!-- ── BORDER RINGS ──────────────────────────── -->
+  <circle cx="200" cy="200" r="195" fill="none" stroke="#c80000" stroke-width="5"/>
+  <circle cx="200" cy="200" r="185" fill="none" stroke="#c80000" stroke-width="1" opacity="0.35"/>
+
+  <!-- ── 4 CARDINAL TICK MARKS ─────────────────── -->
+  <line x1="200" y1="2"   x2="200" y2="20"  stroke="#c80000" stroke-width="4.5" transform="rotate(0,200,200)"/>
+  <line x1="200" y1="2"   x2="200" y2="20"  stroke="#c80000" stroke-width="4.5" transform="rotate(90,200,200)"/>
+  <line x1="200" y1="2"   x2="200" y2="20"  stroke="#c80000" stroke-width="4.5" transform="rotate(180,200,200)"/>
+  <line x1="200" y1="2"   x2="200" y2="20"  stroke="#c80000" stroke-width="4.5" transform="rotate(270,200,200)"/>
+
+  <!-- ── TOP ARC TEXT: M.A.R.K.S ───────────────── -->
+  <text font-family="'Courier New', Courier, monospace"
+        font-size="26" font-weight="bold" letter-spacing="12"
+        fill="#ffffff" text-anchor="middle" dy="-5">
+    <textPath href="#tA" startOffset="50%">M.A.R.K.S</textPath>
+  </text>
+
+  <!-- ── BOTTOM ARC TEXT ───────────────────────── -->
+  <text font-family="'Courier New', Courier, monospace"
+        font-size="11.5" letter-spacing="2"
+        fill="#555" text-anchor="middle" dy="14.5">
+    <textPath href="#bA" startOffset="50%">CONTAINMENT  &amp;  TRIAL  DIVISION</textPath>
+  </text>
+
+  <!-- ── INNER SEPARATOR RING ──────────────────── -->
+  <circle cx="200" cy="200" r="154" fill="none" stroke="#202020" stroke-width="2"/>
+
+  <!-- ── LEFT / RIGHT SEPARATOR DOTS ───────────── -->
+  <circle cx="40"  cy="200" r="4" fill="#5a0000"/>
+  <circle cx="360" cy="200" r="4" fill="#5a0000"/>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- ── KEYHOLE  (main emblem) ────────────────── -->
+  <!-- ════════════════════════════════════════════ -->
+
+  <!-- Outer glow ring (soft halo behind keyhole) -->
+  <circle cx="200" cy="172" r="64" fill="#c80000" opacity="0.08"/>
+
+  <!-- Keyhole ring -->
+  <circle cx="200" cy="172" r="56" fill="#c80000"/>
+  <!-- Ring cutout (the hole a key turns in) -->
+  <circle cx="200" cy="172" r="28" fill="url(#bg)"/>
+
+  <!-- Keyhole slot (the channel below) -->
+  <rect x="182" y="218" width="36" height="68" rx="6" fill="#c80000"/>
+
+  <!-- Thin inner shadow on slot top edge (depth hint) -->
+  <rect x="182" y="218" width="36" height="6" rx="3" fill="#8a0000"/>
+
+  <!-- ── FILE ID ─────────────────────────────────── -->
+  <text x="200" y="325" text-anchor="middle"
+        font-family="'Courier New', Courier, monospace"
+        font-size="11" letter-spacing="4" fill="#2c2c2c">M-0047</text>
+</svg>
