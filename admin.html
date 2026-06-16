@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADMIN — M.A.R.K.S</title>
+  <link rel="icon" href="badge.svg" type="image/svg+xml">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red: #c80000; --dark-red: #3a0000; --bg: #050505;
+      --surface: #0c0c0c; --border: #1a1a1a; --text: #ccc; --dim: #444;
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Courier New', monospace; min-height: 100vh; }
+
+    /* ── LOCK SCREEN ── */
+    #lock {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 100vh; gap: 24px;
+    }
+    #lock .lock-title { font-size: 11px; letter-spacing: 6px; color: var(--red); }
+    #lock .lock-logo  { font-size: 36px; font-weight: bold; letter-spacing: 10px; color: #fff; }
+    #lock .lock-sub   { font-size: 9px; letter-spacing: 4px; color: var(--dim); }
+    #lock-form { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 12px; }
+    #lock-form input {
+      background: #0a0a0a; border: 1px solid var(--red); color: #fff;
+      font-family: 'Courier New', monospace; font-size: 14px; letter-spacing: 4px;
+      padding: 10px 18px; width: 260px; text-align: center; outline: none;
+    }
+    #lock-form input::placeholder { color: #333; letter-spacing: 3px; }
+    #lock-form button {
+      background: var(--red); border: none; color: #fff;
+      font-family: 'Courier New', monospace; font-size: 11px; letter-spacing: 4px;
+      padding: 10px 28px; cursor: pointer; width: 260px;
+    }
+    #lock-form button:hover { background: #a00000; }
+    #lock-err { color: #a00000; font-size: 10px; letter-spacing: 3px; min-height: 14px; }
+    .hidden { display: none !important; }
+
+    /* ── ADMIN SHELL ── */
+    #admin { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+    .admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+    .admin-logo { font-size: 22px; font-weight: bold; letter-spacing: 8px; color: #fff; }
+    .admin-logo span { color: var(--red); }
+    .admin-meta { font-size: 9px; letter-spacing: 3px; color: var(--dim); text-align: right; line-height: 1.8; }
+    .logout-btn {
+      background: none; border: 1px solid #222; color: var(--dim);
+      font-family: 'Courier New', monospace; font-size: 9px; letter-spacing: 2px;
+      padding: 5px 12px; cursor: pointer; margin-top: 6px;
+    }
+    .logout-btn:hover { border-color: var(--red); color: var(--red); }
+
+    /* ── PROGRESS BAR ── */
+    .progress-wrap { margin-bottom: 32px; }
+    .progress-label { font-size: 9px; letter-spacing: 3px; color: var(--dim); margin-bottom: 8px; display: flex; justify-content: space-between; }
+    .progress-label span { color: var(--red); }
+    .progress-bar { height: 4px; background: #111; width: 100%; }
+    .progress-fill { height: 100%; background: var(--red); transition: width .4s; }
+
+    /* ── PHASE ── */
+    .phase { margin-bottom: 28px; }
+    .phase-header {
+      font-size: 9px; letter-spacing: 4px; color: var(--red);
+      border-bottom: 1px solid var(--dark-red); padding-bottom: 8px; margin-bottom: 4px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .phase-count { color: var(--dim); }
+
+    /* ── TASK ROW ── */
+    .task {
+      display: flex; align-items: center; gap: 14px;
+      padding: 10px 14px; border-bottom: 1px solid var(--border);
+      cursor: pointer; user-select: none; transition: background .15s;
+    }
+    .task:hover { background: #0f0f0f; }
+    .task.done { opacity: 0.45; }
+    .task.done .task-text { text-decoration: line-through; color: var(--dim); }
+    .task-num { font-size: 9px; color: #333; width: 22px; flex-shrink: 0; }
+    .task-check {
+      width: 16px; height: 16px; border: 1px solid #333; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 11px;
+    }
+    .task.done .task-check { border-color: var(--red); color: var(--red); background: #1a0000; }
+    .task-text { font-size: 12px; color: #aaa; line-height: 1.4; flex: 1; }
+    .task.done .task-check::after { content: '✓'; }
+  </style>
+</head>
+<body>
+
+<!-- ── LOCK SCREEN ── -->
+<div id="lock">
+  <div class="lock-title">▶ RESTRICTED ACCESS ◀</div>
+  <div class="lock-logo">M.A.R.K.S</div>
+  <div class="lock-sub">ADMIN TERMINAL // CLASSIFIED</div>
+  <form id="lock-form" onsubmit="tryLogin(event)">
+    <input id="pass-input" type="password" placeholder="ENTER PASSPHRASE" autocomplete="off">
+    <button type="submit">[ AUTHENTICATE ]</button>
+    <div id="lock-err"></div>
+  </form>
+</div>
+
+<!-- ── ADMIN PANEL ── -->
+<div id="admin" class="hidden">
+  <div class="admin-header">
+    <div>
+      <div class="admin-logo">M.A.R.K.S <span>//</span> ADMIN</div>
+      <div style="font-size:9px;letter-spacing:3px;color:var(--dim);margin-top:4px;">DEVELOPMENT TASK BOARD</div>
+    </div>
+    <div class="admin-meta">
+      SESSION: AUTHORIZED<br>
+      FILE: M-0047<br>
+      <button class="logout-btn" onclick="logout()">[ LOCK SESSION ]</button>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>COMPLETION</span>
+      <span id="prog-text">0 / 35 TASKS</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+
+  <div id="task-board"></div>
+</div>
+
+<script>
+// ── Change password here (base64 encoded) ──────────────────────────────────
+// Current password: MARKS-0047
+// To change: run  btoa("YOURNEWPASSWORD")  in browser console and paste result
+const PASS_B64 = "TUFSS1MtMDA0Nw==";
+// ───────────────────────────────────────────────────────────────────────────
+
+const PHASES = [
+  {
+    label: "PHASE 1 — LOBBY COMPLETE",
+    tasks: [
+      "Set RECRUIT Developer Product ID (100 R$) in DonationShop TIER table",
+      "Set OPERATIVE Developer Product ID (1,000 R$) in DonationShop TIER table",
+      "Set WARDEN Developer Product ID (10,000 R$) in DonationShop TIER table",
+      "Create Place 2 in the experience and copy its Place ID into ElevatorController",
+      "Build ElevatorController script — teleport players to Place 2 via TeleportService",
+      "Wire IntermissionController TODO — replace comment with actual TeleportService call",
+      "Add looping ambient sounds to lobby (industrial hum, distant alarms)",
+      "Playtesting Pass 1 — test all GUIs, leaderboard, donation, intro cutscene, 3D timer",
+    ]
+  },
+  {
+    label: "PHASE 2 — CORE GAME FRAMEWORK",
+    tasks: [
+      "GameManager Script — round loop: wait for players → pick round → load map → timer → winner → repeat",
+      "In-game HUD — LocalScript showing round name, countdown timer, alive player count",
+      "Death system — on player death remove from AlivePlayers, move to spectator camera",
+      "Spectate system — dead players can cycle through alive players' cameras",
+      "Winner sequence — last alive triggers winner screen, increments Wins DataStore, teleports all to lobby",
+      "Round transition screens — cinematic black screen + text between rounds",
+    ]
+  },
+  {
+    label: "PHASE 3 — ROUNDS",
+    tasks: [
+      "Round 1A — Cycle of Death: rotating arm arena, touch = die",
+      "Round 1B — Fire Doors: 20 doors around circle, fire behind some, wrong door = die",
+      "Round 2A — Puzzle Room: floor buttons and symbol panels, wrong sequence = die",
+      "Round 2B — SAW Room: timed trap puzzle, timer runs out = die",
+      "Round 3A — Train Cabinet: moving train, duck under obstacles, hit = die",
+      "Round 3B — Junkyard: falling cars from crane, under one = die",
+      "Round 4A — School Test: multiple choice, trapdoor under wrong answer",
+      "Round 4B — Monkey Memory: Simon Says with 4 color panels, wrong input = die",
+      "Round 5 — Parkour Race: first to finish advances, last place eliminated",
+      "Round 6A — The Arena: final 1v1 on circular platform, fall or fight",
+      "Round 6B — The Tank: underwater escape puzzle, last out dies",
+      "Russian Roulette — special trigger round inserted after Round 3, 1 in 6 chance",
+    ]
+  },
+  {
+    label: "PHASE 4 — POLISH & FEEL",
+    tasks: [
+      "Round selection logic — GameManager randomly picks 1A or 1B, 2A or 2B, etc. per match",
+      "Sound design — per-round music and SFX (alarms, mechanical sounds, countdown beeps)",
+      "Lighting passes — per-round atmosphere (Lighting, fog, color correction)",
+      "Kill effects — visual death effect when a player is eliminated",
+      "Leaderboard persistence — verify wins save correctly across sessions with DataStore",
+    ]
+  },
+  {
+    label: "PHASE 5 — LAUNCH PREP",
+    tasks: [
+      "Upload badge.svg as game icon (1:1 square crop)",
+      "Upload discord-banner.svg layout as game 16:9 thumbnail",
+      "Write game store page description in M.A.R.K.S tone",
+      "Set up Discord server with welcome image and banner, link in game description",
+      "Playtesting Pass 2 — full run through all rounds with real players, fix regressions",
+      "Set max players to 75 in game settings",
+      "Publish — set game to Public",
+    ]
+  }
+];
+
+const STORAGE_KEY = "marks_admin_tasks";
+
+function tryLogin(e) {
+  e.preventDefault();
+  const val = document.getElementById("pass-input").value;
+  if (val === atob(PASS_B64)) {
+    sessionStorage.setItem("marks_auth", "1");
+    document.getElementById("lock").classList.add("hidden");
+    document.getElementById("admin").classList.remove("hidden");
+    renderBoard();
+  } else {
+    const err = document.getElementById("lock-err");
+    err.textContent = "ACCESS DENIED — INVALID PASSPHRASE";
+    setTimeout(() => err.textContent = "", 2000);
+    document.getElementById("pass-input").value = "";
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem("marks_auth");
+  document.getElementById("admin").classList.add("hidden");
+  document.getElementById("lock").classList.remove("hidden");
+  document.getElementById("pass-input").value = "";
+}
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+}
+
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function updateProgress() {
+  const state = loadState();
+  let total = 0, done = 0;
+  PHASES.forEach(ph => ph.tasks.forEach((_, i) => {
+    total++;
+    if (state[ph.label + i]) done++;
+  }));
+  document.getElementById("prog-text").textContent = done + " / " + total + " TASKS";
+  document.getElementById("prog-fill").style.width = (total ? (done / total * 100) : 0).toFixed(1) + "%";
+}
+
+function renderBoard() {
+  const board = document.getElementById("task-board");
+  board.innerHTML = "";
+  const state = loadState();
+  let globalIdx = 1;
+
+  PHASES.forEach(ph => {
+    const section = document.createElement("div");
+    section.className = "phase";
+
+    const doneCount = ph.tasks.filter((_, i) => state[ph.label + i]).length;
+    section.innerHTML = `<div class="phase-header">
+      <span>${ph.label}</span>
+      <span class="phase-count">${doneCount}/${ph.tasks.length}</span>
+    </div>`;
+
+    ph.tasks.forEach((text, i) => {
+      const key = ph.label + i;
+      const isDone = !!state[key];
+      const row = document.createElement("div");
+      row.className = "task" + (isDone ? " done" : "");
+      row.innerHTML = `<div class="task-num">${String(globalIdx).padStart(2,"0")}</div>
+        <div class="task-check"></div>
+        <div class="task-text">${text}</div>`;
+      row.addEventListener("click", () => {
+        const s = loadState();
+        s[key] = !s[key];
+        saveState(s);
+        renderBoard();
+        updateProgress();
+      });
+      section.appendChild(row);
+      globalIdx++;
+    });
+
+    board.appendChild(section);
+  });
+
+  updateProgress();
+}
+
+// Auto-restore session
+if (sessionStorage.getItem("marks_auth") === "1") {
+  document.getElementById("lock").classList.add("hidden");
+  document.getElementById("admin").classList.remove("hidden");
+  renderBoard();
+}
+</script>
+</body>
+</html>
